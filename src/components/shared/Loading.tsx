@@ -25,7 +25,7 @@ const StyledRipple = styled.div`
   height: 80px;
   div {
     position: absolute;
-    border: 4px solid red;
+    border: 4px solid #002b56;
     opacity: 1;
     border-radius: 50%;
     animation: ${LdsRipple} 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;

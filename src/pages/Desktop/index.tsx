@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { Filters } from "../../components/desktop/Filters";
-import LoadMore from "../../components/desktop/LoadMore";
-import PageDescription from "../../components/desktop/PageDescription";
-import PageHeader from "../../components/desktop/PageHeader";
+import LoadMore from "../../components/shared/LoadMore";
+import PageDescription from "../../components/shared/PageDescription";
+import PageHeader from "../../components/shared/PageHeader";
 import RestaurantCard from "../../components/desktop/RestaurantCard";
-import {useAppContext, } from "../../business_logic/AppProvider";
+import { useAppContext } from "../../business_logic/AppProvider";
+import DivisionLine from "../../components/shared/DivisionLine";
+import CardListTitle from "../../components/shared/CardListTitle";
+import SizedDivider from "../../components/shared/SizedDivider";
+import { useNavigate } from "react-router";
 
 const StyledAppContainer = styled.div`
-  padding: 64px;
-  max-width: 1440px;
-  margin:auto;
+  margin: auto;
 `;
 
 const StyledHeaderContainer = styled.div`
@@ -42,36 +44,59 @@ const LoadMoreContainer = styled.div`
   justify-content: center;
 `;
 
-const CardListTitle = styled.div`
-  font-size:34px;
-  color: #333333;
-  margin-top: 64px;
-`
+const PaddedContainer = styled.div`
+  padding: 0 64px;
+`;
 
 export default function Desktop() {
-  const {data, onLoadMore} = useAppContext();
+  const { data, onLoadMore } = useAppContext();
+  const navigate = useNavigate();
   return (
-        <StyledAppContainer>
-          <StyledHeaderContainer>
-            <PageHeader />
-          </StyledHeaderContainer>
-          <StyledFiltersContainer>
-            <PageDescription />
-          </StyledFiltersContainer>
-          <Filters />
-          <CardListTitle>All Restaurants</CardListTitle>
-          <StyledCardsContainer>
-            {
-              data && data.businesses && data.businesses.map((restaurant, index) => {
-                return (
-                  <RestaurantCard image={restaurant.image_url} id={restaurant.id} category={restaurant.categories?.map(cat=>cat.title).slice(0,1).join(',')} price={restaurant.price} stars={restaurant.rating} key={index} open={!restaurant.is_closed} title={restaurant.name} />
-                )
-              })
-            }
-          </StyledCardsContainer>
-          <LoadMoreContainer onClick={onLoadMore()}>
-            { (data?.total ?? 0) > (data?.businesses?.length ?? 0) && <LoadMore/>}
-          </LoadMoreContainer>
-        </StyledAppContainer>
+    <StyledAppContainer>
+      <PaddedContainer>
+        <StyledHeaderContainer>
+          <PageHeader />
+        </StyledHeaderContainer>
+        <StyledFiltersContainer>
+          <PageDescription />
+        </StyledFiltersContainer>
+      </PaddedContainer>
+      <DivisionLine />
+      <PaddedContainer>
+        <Filters />
+      </PaddedContainer>
+      <DivisionLine />
+      <PaddedContainer>
+        <SizedDivider size={64} />
+        <CardListTitle />
+        <StyledCardsContainer>
+          {data &&
+            data.businesses &&
+            data.businesses.map((restaurant, index) => {
+              return (
+                <RestaurantCard
+                  onLearnMoreClick={() => navigate(`/detail/${restaurant.id}`)}
+                  image={restaurant.image_url}
+                  id={restaurant.id}
+                  category={restaurant.categories
+                    ?.map((cat) => cat.title)
+                    .slice(0, 1)
+                    .join(",")}
+                  price={restaurant.price}
+                  stars={restaurant.rating}
+                  key={index}
+                  open={!restaurant.is_closed}
+                  title={restaurant.name}
+                />
+              );
+            })}
+        </StyledCardsContainer>
+        <LoadMoreContainer>
+          {(data?.total ?? 0) > (data?.businesses?.length ?? 0) && (
+            <LoadMore onClick={onLoadMore()} />
+          )}
+        </LoadMoreContainer>
+      </PaddedContainer>
+    </StyledAppContainer>
   );
 }

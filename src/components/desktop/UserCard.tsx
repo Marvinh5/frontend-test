@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import React from "react";
-import SizedDivider from "../SizedDivider";
+import SizedDivider from "../shared/SizedDivider";
+import { insideMobileBreakPoint } from "../../helpers/useIsMobile";
 
 const StyledUserCardContainer = styled.div`
   display: flex;
@@ -17,6 +18,11 @@ const TittleAndDateContainer = styled.div`
 const ImageContainer = styled.div<{ background?: string }>`
   height: 80px;
   width: 80px;
+
+  ${insideMobileBreakPoint(css`
+    width: 64px;
+    height: 64px;
+  `)}
   background-color: gray;
   background-repeat: no-repeat;
   background-size: cover;
@@ -25,23 +31,34 @@ const ImageContainer = styled.div<{ background?: string }>`
 
 const Title = styled.div`
   font-size: 22px;
+  ${insideMobileBreakPoint(css`
+    font-size: 18px;
+  `)}
   color: #000000;
 `;
 
 const Date = styled.div`
   font-size: 16px;
   color: #666666;
+  font-weight: lighter;
 `;
 
-export default function UserCard({name, date, image}) {
+function UserCard({ name, date, image }) {
   return (
     <StyledUserCardContainer>
-      <ImageContainer background={image}/>
-      <SizedDivider size={32} x/>
+      <ImageContainer background={image} />
+      <SizedDivider size={32} x />
       <TittleAndDateContainer>
         <Title>{name}</Title>
-        <Date>{date}</Date>
+        <SizedDivider size={4} />
+        <Date>
+          {new Intl.DateTimeFormat("en-GB", {
+            dateStyle: "short",
+          }).format(new window.Date(date))}
+        </Date>
       </TittleAndDateContainer>
     </StyledUserCardContainer>
   );
 }
+
+export default React.memo(UserCard);

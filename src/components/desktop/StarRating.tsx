@@ -1,20 +1,33 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import React from "react";
 import { StarOutline, StarSolid } from "../icons/Stars";
-const StyledStarContainer = styled.div`
+const StyledStarContainer = styled.div<{ noMargin: boolean; size: number }>`
   display: flex;
   flex-direction: row;
-  margin-top: 8.14px;
+  ${(props) =>
+    !props.noMargin &&
+    css`
+      margin-top: 8.14px;
+    `}
 
   svg {
-    height: 30px;
+    height: ${(props) => props.size}px;
+    width: ${(props)=>props.size}px;
     margin-right: 1.5px;
   }
 `;
 
-export default function StarRating({ stars }: { stars: number }) {
+export default function StarRating({
+  stars,
+  noMargin = false,
+  size = 30,
+}: {
+  stars: number;
+  noMargin?: boolean;
+  size?: number;
+}) {
   return (
-    <StyledStarContainer>
+    <StyledStarContainer noMargin={noMargin} size={size}>
       {Array.from(Array(5)).map((_, index) => {
         if (index + 1 <= stars) {
           return <StarSolid key={index} />;

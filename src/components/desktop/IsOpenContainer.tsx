@@ -6,6 +6,7 @@ const StyledIsAvailableContainer = styled.div`
   color: #757575;
   font-size: 12px;
 `;
+
 export default function IsOpenContainer({ isOpen }: { isOpen: boolean }) {
   return (
     <StyledIsAvailableContainer>

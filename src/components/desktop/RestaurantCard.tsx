@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import React from "react";
-import Spacer from "../Spacer";
-import { useNavigate } from "react-router";
+import Spacer from "../shared/Spacer";
 import StarRating from "./StarRating";
 import CategoryAndPrice from "./CategoryAndPrice";
 import IsOpenContainer from "./IsOpenContainer";
+import StyledCardImageImage from "../shared/StyledCardImage";
+import { StyledExtraDetailsRow } from "../shared/CardCategory";
+import SizedDivider from "../shared/SizedDivider";
 
 const StyledCard = styled.div`
   display: flex;
@@ -13,26 +15,9 @@ const StyledCard = styled.div`
   height: 428px;
 `;
 
-const StyledImage = styled.img<{background?:string}>`
-  height: 228px;
-  background: #cccaca;
-  width: 100%;
-  background-image: url("${props => props.background}");
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
-
 const StyledTitle = styled.div`
   font-size: 20px;
   margin-top: 16px;
-`;
-
-const StyledExtraDetailsRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 16.5px;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const StyledLearnMore = styled.div`
@@ -59,8 +44,8 @@ export default function RestaurantCard({
   open,
   category,
   price,
-  id,
   image,
+  onLearnMoreClick,
 }: {
   stars?: number;
   title?: string;
@@ -69,21 +54,22 @@ export default function RestaurantCard({
   price: string;
   id: string;
   image: string;
+  onLearnMoreClick: VoidFunction;
 }) {
-  const navigate = useNavigate();
   return (
     <StyledCard className="restaurant-card">
-      <StyledImage background={image} />
+      <StyledCardImageImage background={image} />
       <StyledTitle>
         {title ?? "Very Long name restaurants number 1 in list"}
       </StyledTitle>
       <StarRating stars={stars} />
+      <SizedDivider size={16} />
       <StyledExtraDetailsRow>
         <CategoryAndPrice category={category} price={price} />
         <IsOpenContainer isOpen={open} />
       </StyledExtraDetailsRow>
       <Spacer />
-      <StyledLearnMore onClick={() => navigate(`/detail/${id}`)}>
+      <StyledLearnMore onClick={onLearnMoreClick}>
         Learn More
       </StyledLearnMore>
     </StyledCard>

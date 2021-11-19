@@ -30,14 +30,24 @@ const config: Configuration = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
+    publicPath: '/',
     chunkFilename(chunkName) {
-      return `${chunkName?.chunk?.name ?? chunkName?.chunk?.id}-chunk-bundle.js`;
+      return `${
+        chunkName?.chunk?.name ?? chunkName?.chunk?.id
+      }-chunk-bundle.js`;
     },
   },
   devServer: {
     static: path.join(__dirname, "dist"),
     compress: true,
     port: 4000,
+    historyApiFallback: true,
+    hot: true,
+    devMiddleware: {
+      writeToDisk: true,
+      serverSideRender: true,
+      publicPath: '/',
+    },
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({

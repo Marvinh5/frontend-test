@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { insideMobileBreakPoint } from "../../helpers/useIsMobile";
 
 const StyledLoadMore = styled.div`
   width: 416px;
@@ -20,8 +21,12 @@ const StyledLoadMore = styled.div`
     opacity: 0.75;
     box-shadow: inset 0 0 0 3px #002b53;
   }
+
+  ${insideMobileBreakPoint(css`
+    width: 212px;
+  `)}
 `;
 
-export default function LoadMore() {
-  return <StyledLoadMore>Load more</StyledLoadMore>;
+export default function LoadMore({ onClick }: { onClick: VoidFunction }) {
+  return <StyledLoadMore onClick={onClick}>Load more</StyledLoadMore>;
 }

@@ -1,23 +1,28 @@
 import React from "react";
-import { useParams } from "react-router";
 import styled from "styled-components";
-import { useAppContext } from "../../business_logic/AppProvider";
 import MapQuest from "../../business_logic/MapQuest";
 import CategoryAndPrice from "../../components/desktop/CategoryAndPrice";
 import IsOpenContainer from "../../components/desktop/IsOpenContainer";
-import PageHeader from "../../components/desktop/PageHeader";
+import PageHeader from "../../components/shared/PageHeader";
 import ReviewsCount from "../../components/desktop/ReviewsCount";
 import StarRating from "../../components/desktop/StarRating";
 import UserCard from "../../components/desktop/UserCard";
 import { UserComment } from "../../components/desktop/UserComment";
+import DivisionLine from "../../components/shared/DivisionLine";
 import Loading from "../../components/shared/Loading";
-import SizedDivider from "../../components/SizedDivider";
-import Spacer from "../../components/Spacer";
+import SizedDivider from "../../components/shared/SizedDivider";
+import Spacer from "../../components/shared/Spacer";
+import useDetailsLoader from "../../helpers/useDetailsLoader";
+import {
+  Image,
+  ImageContainer,
+  ImagesAndMapContainer,
+  MapContainer,
+} from "../../components/shared/ImagesAndMapContainer";
 
 const StyledDetailContainer = styled.div`
-  max-width: 1440px;
   padding-top: 36px;
-  margin:auto;
+  margin: auto;
 `;
 
 const StyledPaddedContainer = styled.div`
@@ -31,47 +36,8 @@ const ExtraDetailsContainer = styled.div`
   flex-direction: row;
 `;
 
-const StyledDivisionLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: #e6e6e6;
-  position: absolute;
-  inset: 0;
-`;
-
-const ImagesAndMapContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 228px;
-  flex-direction: row;
-  overflow-x: auto;
-`;
-
-const MapContainer = styled.div<{ background: string }>`
-  width: 640px;
-  height: 100%;
-  background: gray;
-  background-image: url("${props => props.background}");
-  background-size: cover;
-  background-repeat: no-repeat;
-`;
-
-const Image = styled.div<{ background?: string }>`
-  background: gray;
-  background-image: url(${(props) => props.background});
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 304px;
-`;
-
 const LocationText = styled.div`
   font-size: 20px;
-`;
-
-const DivisionLineContainer = styled.div`
-  position: relative;
-  height: 1px;
-  overflow: visible;
 `;
 
 const CommentAndUserCardContainer = styled.div`
@@ -79,29 +45,11 @@ const CommentAndUserCardContainer = styled.div`
   flex-direction: row;
 `;
 
-const DivisionLine = () => {
-  return (
-    <DivisionLineContainer>
-      <StyledDivisionLine />
-    </DivisionLineContainer>
-  );
-};
-
 function Detail() {
-  const { id } = useParams();
+  const { loading, selectedBusiness, selectedBusinessReviews } =
+    useDetailsLoader();
 
-  const { loadPageById, selectedBusiness, selectedBusinessReviews } =
-    useAppContext();
-
-  React.useEffect(() => {
-    if (id) {
-      setTimeout(() => {
-        loadPageById(id);
-      }, 0);
-    }
-  }, []);
-
-  if (!selectedBusiness || !selectedBusinessReviews) return <Loading />;
+  if (loading) return <Loading />;
 
   const {
     name,
@@ -141,14 +89,11 @@ function Detail() {
               coordinates.longitude
             )}
           />
-          <SizedDivider x size={32} />
-
           {photos.map((photo) => {
             return (
-              <>
+              <ImageContainer key={photo}>
                 <Image background={photo} />
-                <SizedDivider x size={32} />
-              </>
+              </ImageContainer>
             );
           })}
         </ImagesAndMapContainer>
@@ -166,7 +111,7 @@ function Detail() {
         <SizedDivider size={48} />
         {selectedBusinessReviews?.reviews?.map((review) => {
           return (
-            <>
+            <div key={review.id}>
               <CommentAndUserCardContainer key={review.id}>
                 <UserCard
                   name={review.user.name}
@@ -179,7 +124,7 @@ function Detail() {
               <SizedDivider size={80} />
               <DivisionLine />
               <SizedDivider size={80} />
-            </>
+            </div>
           );
         })}
       </StyledPaddedContainer>

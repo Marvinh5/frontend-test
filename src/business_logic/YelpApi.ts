@@ -1,4 +1,4 @@
-import config from "../data/config.json";
+import config from "../data/config";
 import { ApiUrl } from "./Url";
 import { IFilters } from "../types/Filter";
 import { BusinessSearchResponse } from "../types/BusinessSearchResponse";
@@ -9,7 +9,7 @@ import {
 } from "../types/YelpBusiness";
 
 export default function YelpApi() {
-  const apiKey = config.Authorization;
+  const apiKey = config.yelpApiKey;
   let baseUrl = `https://api.yelp.com/v3`;
   const proxy = `http://localhost:8010/proxy/v3`;
 

@@ -1,8 +1,14 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { insideMobileBreakPoint } from "../../helpers/useIsMobile";
 const StyledPageDescription = styled.div`
   font-size: 22px;
   color: #666666;
+  ${insideMobileBreakPoint(
+    css`
+      font-size: 16px;
+    `
+  )}
 `;
 
 export default function PageDescription() {

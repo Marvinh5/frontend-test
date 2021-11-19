@@ -17,9 +17,9 @@ const ClearAllLabel = styled.div`
   font-weight: bold;
 `;
 
-export default function ClearAll() {
+export default function ClearAll({onClick}:{onClick: () => void}) {
   return (
-    <StyledClearAll>
+    <StyledClearAll onClick={onClick}>
       <ClearAllLabel>Clear all</ClearAllLabel>
     </StyledClearAll>
   );

@@ -1,20 +1,26 @@
-import React from "react";
-import { Filters } from "./components/Filters";
-import LoadMore from "./components/LoadMore";
-import PageDescription from "./components/PageDescription";
-import PageHeader from "./components/PageHeader";
-import RestaurantCard from "./components/RestaurantCard";
+import {
+  AppProvider,
+  useProviderDefaultValues,
+} from "./business_logic/AppProvider";
+import React, { Suspense } from "react";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import LazyLoaded from "./helpers/LazyLoaded";
 
-export default function App() {
+const Desktop = LazyLoaded(import("./pages/Desktop"));
+const DetailPage = LazyLoaded(import("./pages/Desktop/detail"));
+
+export default function App({}: { children: React.ReactNode }) {
+  const value = useProviderDefaultValues();
   return (
-    <div>
-      <PageHeader />
-      <PageDescription />
-      <Filters />
-      <RestaurantCard open={true} stars={3} />
-      <div style={{height:50}}></div>
-      <RestaurantCard open={false} stars={5} />
-      <LoadMore></LoadMore>
-    </div>
+    <BrowserRouter>
+      <AppProvider value={value}>
+        <Suspense fallback={<div>....loading</div>}>
+          <Routes>
+            <Route index element={<Desktop />} />
+            <Route path="/detail/:id" element={<DetailPage />} />
+          </Routes>
+        </Suspense>
+      </AppProvider>
+    </BrowserRouter>
   );
 }

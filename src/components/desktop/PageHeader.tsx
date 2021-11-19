@@ -6,8 +6,8 @@ const StyledPageHeader = styled.div`
   color: #333333;
 `;
 
-export default function PageHeader() {
+export default function PageHeader({title}:{title?:string}) {
   return <StyledPageHeader>
-    Restaurants
+    {title ?? 'Restaurants'}
   </StyledPageHeader>
 }

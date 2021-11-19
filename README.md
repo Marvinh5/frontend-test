@@ -60,7 +60,7 @@ Detail View
 
 - TypeScript oriented (JavaScipt can be used, but we strongly prefer TypeScript)
   - Use **React**
-  - _Do not_ use any React boilerplate, such as Create React App
+  - _Do not_ use any React boilerplate, such as Create React Desktop
 - Feel free to use a preprocessor, CSS-in-JS, or JSS tool but _do not_ use any pre-styled frameworks or libraries
   - The general rule of thumb is: you should write your own styling for your components, do not use "pre-made" tools and utilities
   - There are a few reasons we do this:
@@ -94,7 +94,7 @@ Detail View
 
 ## What We Care About
 
-Use any libraries that you would normally use if this were a real production App. Be prepared to justify those choices.
+Use any libraries that you would normally use if this were a real production Desktop. Be prepared to justify those choices.
 Please note: _we care more about how you approach the problem than the end result. Code cleanliness and design
 are more important than using the "right" library._
 

@@ -13,7 +13,13 @@ const StyledLoadMore = styled.div`
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: #002B53;
+  color: #002b53;
+  cursor: pointer;
+  transition: all 300ms ease 0s;
+  :hover {
+    opacity: 0.75;
+    box-shadow: inset 0 0 0 3px #002b53;
+  }
 `;
 
 export default function LoadMore() {

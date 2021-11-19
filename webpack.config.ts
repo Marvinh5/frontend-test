@@ -1,6 +1,7 @@
 import path from "path";
 import { Configuration } from "webpack";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const config: Configuration = {
   entry: "./src/index.ts",
@@ -56,6 +57,10 @@ const config: Configuration = {
         files: "./src/**/*",
       },
     }),
+    new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: './public/index.html'
+    })
   ],
 };
 

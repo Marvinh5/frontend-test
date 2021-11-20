@@ -10,13 +10,8 @@ import {
 
 export default function YelpApi() {
   const apiKey = config.yelpApiKey;
-  const baseUrl = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/`;
-  // const proxy = `http://localhost:8010/proxy/v3`;
+  const baseUrl = `https://cors-anywhere-marvin.herokuapp.com/https://api.yelp.com/v3/`;
 
-  // if (process.env.NODE_ENV != "production") {
-  //   console.log(`Using proxy: ${proxy}`);
-  //   baseUrl = proxy;
-  // }
 
   async function searchBusinessById(
     id: string

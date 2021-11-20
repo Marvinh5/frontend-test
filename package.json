@@ -12,9 +12,10 @@
     "webpack": "^5.64.1"
   },
   "scripts": {
-    "start": "webpack serve --open",
-    "start:proxy": "node ./index.js",
-    "build": "npm install && NODE_ENV=production webpack --mode production"
+    "start:frontend": "webpack serve --open",
+    "start": "node ./index.js",
+    "build": "yarn add cors-anywhere",
+    "build:frontend": "npm install && NODE_ENV=production webpack --mode production"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
